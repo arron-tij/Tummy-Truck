@@ -1,0 +1,78 @@
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <style>input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+   opacity: 1;
+}</style>
+  <h1>Food</h1>
+  {% if user.is_authenticated %}
+<p>Welcome {{ user.username }} !!!</p>
+<p><a href="{% url 'account_logout' %}">Log out</a>
+{% else %}
+<p><a href="{% url 'account_login' %}">Log In</a></p>
+{% endif %}
+
+<table class="table">
+    <thead>
+        <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">MRP</th>
+        <th scope="col">Qty.</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for fcat in fcat_list %}
+        <tr><td>{{fcat}}</td></tr>
+        {% for food in restaurant_foods %}
+
+        {%if fcat == food.category %}
+        
+           
+        <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{food.name}}</td>
+        <td>{{food.mrp}}</td>{% if user.is_authenticated %}
+        <td ><input type="number" id="added{{food.id}}" name="added{{food.id}}" onchange="add({{food.id}})">
+        </td>
+             
+        {% endif %}
+        {% endif %}
+        
+        </tr>
+        {% endfor %}
+    {% endfor %}
+    <a href="{% url 'checkout' %}"><button class="btn btn-primary" id="checkout-button">Checkout</button></a>
+    
+    
+    </tbody>
+</table>
+
+
+<script>
+function add(food_id){
+    var amt=document.getElementById("added"+food_id).value
+
+    
+    $.ajax({
+        url:"{% url 'food_cart' %}",
+        method:"POST",
+        data:{
+            
+            amt:amt,
+            food_id:food_id,
+            
+            
+        },
+        
+
+    })
+}
+</script>
+
+
+

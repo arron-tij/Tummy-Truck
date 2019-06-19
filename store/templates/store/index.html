@@ -1,0 +1,13 @@
+{% load socialaccount %}
+
+<h1>Welcome</h1>
+{% if user.is_authenticated %}
+<p>Welcome {{ user.username }} !!!</p>
+<p><a href="{% url 'account_logout' %}">Log out</a>
+<p><a href="{% url 'placeView' %}">Order food</a>
+<p><a href="{% url 'pastView' %}">Past Orders</a>	
+{% else %}
+<p><a href="{% url 'account_signup' %}">Sign Up</a></p>
+<p><a href="{% url 'account_login' %}">Log In </a></p>
+<p><a href="{% url 'placeView' %}">Browse Restaurants</a></p>
+{% endif %}

@@ -1,0 +1,36 @@
+
+<h1>Restaurants</h1>
+
+{% if user.is_authenticated %}
+<p>Welcome {{ user.username }} !!!</p>
+<p><a href="{% url 'account_logout' %}">Log out</a>
+{% else %}
+<p><a href="{% url 'account_login' %}">Log In</a></p>
+{% endif %}
+<table class="table">
+    <thead>
+        <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Place</th>
+        <th scope="col">Location</th>
+        <th scope="col">Far</th>
+        <th scope="col">Rating</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        {% for rest in restaurants %}
+        
+        <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td><a href="{% url 'restaurant_foods' rt=rest.id %}">{{rest.name}}</a></td>
+        <td>{{rest.place}}</td>
+        <td>{{rest.location}}</td>
+        <td>{{rest.far}}</td>
+        <td>{{rest.rating}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
