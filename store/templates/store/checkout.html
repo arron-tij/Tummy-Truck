@@ -1,5 +1,50 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+{% if order_list != null %}
 {% for order in order_list %}
 {{order}}
 {% endfor %}
 
 {{net_amt}}
+<br><br> 
+
+<form >
+	  <input type="number" name="rating" id="rating" min="1" max="5">
+	  <input type="submit" id="rate-button"  onclick="rate({{rid}})">
+</form>
+{% else %}<h1>Go get some items first</h1>
+{% endif %}
+
+<script>
+function rate(rid){
+    var rating = document.getElementById("rating").value;
+    
+   	if(rating<=5){
+    $.ajax({
+		url:"{% url 'rate_restaurant' %}",
+		method:"POST",
+		data:{
+			rid:  rid,
+			rating: rating,
+		},
+
+		success:function(data,status,xhr){
+			if(data['message']==1){
+                alert("Book successfully rated");
+                window.location.replace("/");
+			}
+			else{
+				alert("Unable to rate this book");
+			}
+		},
+		error:function(xhr,status,err){
+			alert("Some error occured");
+		}
+
+
+	})}else alert("Enter a number between 1 to 5");}		
+
+</script>

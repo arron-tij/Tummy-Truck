@@ -61,11 +61,12 @@ def food_cart(request):
     instnc=Food.objects.get(pk=food_id)
     try:
         tmp=FoodOrder.objects.get(food=instnc)
+        
         tmp.total_amt=amt
-
         tmp.save()          
         response_data['message']=0
     except:     
+        
         
         FoodOrder.objects.create(food=instnc,order_time=datetime.datetime.now(),customer=request.user,total_amt=amt)     
         response_data['message']=1
@@ -73,12 +74,13 @@ def food_cart(request):
 
     return JsonResponse(response_data)
 
+@csrf_exempt
 @login_required
 def checkout(request):
     orders=FoodOrder.objects.all()
     net_amt=0
     order_list=[]
-    
+
     for order in orders:
         nsale=order.food.sale+int(order.total_amt)
         order.food.sale=nsale
@@ -86,14 +88,17 @@ def checkout(request):
         mrpf=order.food.mrp
         new_amt=mrpf*order.total_amt
         net_amt=net_amt+new_amt
-        order_list.append(order.food.name)
+        if order.total_amt > 0:
+            order_list.append(order.food.name)
         rname=order.food.restaurant.name
+        rid=order.food.restaurant.pk
         odate=order.order_time
 
     PastOrders.objects.create(foodlist=order_list,customer2=request.user,cost=net_amt,restname=rname,order_date=odate)
     context={
         'net_amt':net_amt,
-        'order_list':order_list
+        'order_list':order_list,
+        'rid':rid,
     }    
     return render(request, 'store/checkout.html', context)     
 
@@ -109,8 +114,24 @@ def pastView(request):
 
     return render(request, 'store/pastorders.html',context)  
 
+@csrf_exempt
+@login_required
+def rate_restaurant(request):
+    response_data={
+        'message':None,
 
+    }
+    rid=request.POST['rid']
+    rating=request.POST['rating']
+    try:
+        instnc=Restaurant.objects.get(pk=rid)        
+        instnc.total_rating = instnc.total_rating + int(rating)        
+        instnc.total_users = instnc.total_users + int(1)
+        instnc.rating=instnc.total_rating/instnc.total_users
+        instnc.save()
+        response_data['message'] = 1
+    except:
+        response_data['message'] = 0
+                
 
-
-    
-
+    return JsonResponse(response_data)
