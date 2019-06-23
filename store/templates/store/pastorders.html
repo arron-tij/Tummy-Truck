@@ -1,9 +1,303 @@
+
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Chivo:300,700|Playfair+Display:700i" rel="stylesheet">
+
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <style>
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+       opacity: 1;}
+
+
+     .content2 {
+          position: fixed;
+          top: 10%;
+          left: 0;
+          background: rgba(0, 0, 0, 0.5);
+          color: #FFF700;
+          width: 100%;
+          padding: 2px;
+          border-bottom:4px solid #B2F302; 
+          border-top:4px solid #B2F302; 
+          
+          
+        }
+        .table{
+          font-weight: 600;
+        }
+        .header {
+          text-align: center;
+          color:white;
+          font-family: 'Satisfy',cursive;
+          
+        }
+        .header2 {
+          padding: 10px 16px;
+          background-image: url( '/static/images/blue.jpg' ); 
+          color: #f1f1f1;
+}
+         body {
+            background-image: url( '/static/images/bq.jpg' );
+             background-position: center;
+            
+         }
+         h1 {
+         font-family: 'Playfair Display', serif;
+         font-weight: 700;
+         font-style: italic;
+        }
+        h2{
+                color:orange !important;
+               font-family: 'Chivo', sans-serif;
+                font-weight: 1000;
+                
+        }
+        h3{
+                font-family: 'Chivo', sans-serif;
+                font-weight: 1000;
+        }
+        
+                
+         .navbar{
+            border-radius:0;
+         }
+         .navbar-brand {
+            font-family:'Satisfy',cursive;
+              
+        }
+        .jumbotron { 
+          background-image: url( '/static/images/black3.jpg' ); 
+          color: #FFDF00;
+          font-family:'Satisfy',cursive;
+          border: 3px solid black;
+          background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover; 
+        }
+        .image{
+            border:3px solid black;
+            padding:6px;
+        }
+        hr{
+            border-bottom: 4px solid black;
+        }
+        blockquote{
+            background-image: url('/static/images/bq.jpg');
+            font-family:'Satisfy';
+            font-size: 200%;
+            border:2px solid black;
+        }
+        a{
+            text-decoration:none;
+            color:#66FF66;
+        
+        }
+        a:hover{
+            text-decoration:none;
+            color:yellow;
+
+        
+        }
+        .btn {
+              border: none;
+              color: white;
+              padding: 14px 28px;
+              font-size: 16px;
+              cursor: pointer;
+              text-align: center;
+            }
+
+        .warning {background-color: #ff9800;} /* Orange */
+        .warning:hover {background: #e68a00;}
+        .contacts{
+            background-color:#008000;
+            color: #FFDF00;
+            border:2px solid black;
+
+        }
+        .cus{
+            border:2px solid black;
+            padding:2px;
+            left:30%;
+        }
+        .load__animation{
+          border: 5px solid #272727;
+          border-top-color: #e50914;
+          border-top-style: groove;
+          height: 100px;
+          width: 100px;
+          border-radius: 100%;
+          position: relative;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          margin: auto;
+          -webkit-animation: turn 1.5s linear infinite;
+          -o-animation: turn 1.5s linear infinite;
+          animation: turn 1.5s linear infinite;
+        }
+
+        .load {
+          position: fixed;
+          background: url(http://i.imgur.com/JUlfODF.png) no-repeat 50% fixed / cover;);
+          width: 100%;
+          height: 100vh;
+          display: flex;
+          align-items:center;
+          justify-content: center;
+          z-index: 999;
+        }
+
+        .load__container {
+          position: relative;
+        }
+
+        @keyframes turn {
+          from {transform: rotate(0deg)}
+          to {transform: rotate(360deg)}
+        } 
+
+        .load__title {
+          color: #fff;
+          font-size: 2rem;
+        }
+
+
+        @keyframes loadPage {
+          0% {
+            opacity: 1;
+          }
+          50% {
+            opacity: .5;
+          }
+          100% {
+            opacity: 1;
+          }
+          
+        }
+        img {
+          border: 2px solid #66FF66;
+          border-radius: 8px; 
+          padding: 5px;
+          width: 31%;
+          height:250px;
+        }
+
+        img:hover {
+          box-shadow: 0px 0px 15px 15px rgba(0, 140, 186, 0.5);
+        }
+        
+        th{
+          color:cyan;  
+        }
+        td{
+            color: yellow;
+        }
+        #t1{
+             color: yellow;
+        }
+        hr{
+            color:orange;
+        }
+        .sticky {
+          position: fixed;
+          top: 45px;
+          width: 100%;
+        }
+
+        .sticky + .content {
+          padding-top: 102px;
+        }
+        .content {
+          padding: 16px;
+        }  
+        .btn{
+          background:black;
+          font-weight: 1000;
+          color:yellow;
+          border:1px solid yellow;
+        }    
+        input{
+          border:1px solid orange;
+          background: black;
+          color:#66FF66;
+          text-align: center;
+        } 
+        hr{
+          border:2px solid #66FF66;
+        }
+        .table td{
+    border: #66FF66 solid 1px !important;
+}
+.table th{
+    border: #66FF66 solid 1px !important;
+}
+#hhr{
+	border: 4px solid maroon;
+}
+
+</style>
+<body>
+  
+<nav class="navbar navbar-fixed-top navbar-inverse">
+    <div class="container-fluid">
+
+        
+        <div class="navbar-header ">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNavBar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+         <a href="#" class="navbar-brand " >Tummy Truck</a>
+        </div>
+
+        
+        <div class="collapse navbar-collapse" id="mainNavBar">
+            <ul class="nav navbar-nav">
+                <li><a href="{%url 'index'%}"><span class="glyphicon glyphicon-home"></span>&nbspHome</a></li>
+                  {% if user.is_authenticated %}
+                <li ><a href="{%url 'placeView'%}"><span class="glyphicon glyphicon-shopping-cart"></span>&nbspOrder Food</a></li>
+                {%else%}
+                <li><a href="{%url 'placeView'%}"><span class="glyphicon glyphicon-glass"></span>&nbspBrowse Restaurants</a></li>
+                <li><a href="{% url 'account_login'%}"><span class="glyphicon glyphicon-log-in"></span>&nbspLogin</a></li>
+                
+                {%endif%}
+                
+            </ul>
+            {% if user.is_authenticated %}
+            <ul class="nav navbar-nav navbar-right">
+            	<li class="active"><a href="{%url 'pastView'%}"><span class="glyphicon glyphicon-tasks"></span>&nbspPast Orders</a></li>
+              <li><a href="{%url 'account_logout'%}"><span class="glyphicon glyphicon-log-out"></span>&nbspLogout</a></li>
+            	
+            </ul>
+            {%endif%}	
+            		
+        </div>
+
+    </div>
+</nav>
+<br><br><br><br>
+
+
+
+
+
+
+<h3>
 {% for order in order_list %}
 {{order.restname}}
 <br>
 {{order.foodlist}}&nbsp &nbsp {{order.order_date}}
 <hr>
-{{order.cost}}
-<hr>	
-<hr>
+Total:&nbsp{{order.cost}}
+<hr id="hhr">	
+<hr id="hhr">
 {% endfor %}
+</h3>
+</body>

@@ -32,11 +32,17 @@ def restaurant_foods(request,rt):
     fcat_list=[]
     for fcat in food_categories:
         fcat_list.append(fcat['category'])
+         
 
     context={
     'rid':rt,
     'restaurant_foods':Food.objects.filter(restaurant=tmp).order_by('-sale'),
     'fcat_list':fcat_list,
+     'rating':Restaurant.objects.get(pk=rt).rating,
+     'descrpn':Restaurant.objects.get(pk=rt).description,
+     'rname':Restaurant.objects.get(pk=rt).name,
+     'ratingint':int(Restaurant.objects.get(pk=rt).rating),
+     'rem':int(5)-int(Restaurant.objects.get(pk=rt).rating)
     }
     return render(request, 'store/restaurant_foods.html', context)
 
@@ -80,32 +86,41 @@ def checkout(request):
     orders=FoodOrder.objects.all()
     net_amt=0
     order_list=[]
+    try:
+        for order in orders:
+            nsale=order.food.sale+int(order.total_amt)
+            order.food.sale=nsale
+            order.food.save()
+            mrpf=order.food.mrp
+            new_amt=mrpf*order.total_amt
+            net_amt=net_amt+new_amt
+            if order.total_amt > 0:
+                olap=order.food.name+str(' x ')+str(order.total_amt)+str(' = ')+str(new_amt)
+                order_list.append(olap)
 
-    for order in orders:
-        nsale=order.food.sale+int(order.total_amt)
-        order.food.sale=nsale
-        order.food.save()
-        mrpf=order.food.mrp
-        new_amt=mrpf*order.total_amt
-        net_amt=net_amt+new_amt
-        if order.total_amt > 0:
-            order_list.append(order.food.name)
-        rname=order.food.restaurant.name
-        rid=order.food.restaurant.pk
-        odate=order.order_time
+            rname=order.food.restaurant.name
+            rid=order.food.restaurant.pk
+            odate=order.order_time
 
-    PastOrders.objects.create(foodlist=order_list,customer2=request.user,cost=net_amt,restname=rname,order_date=odate)
-    context={
-        'net_amt':net_amt,
+        PastOrders.objects.create(foodlist=order_list,customer2=request.user,cost=net_amt,restname=rname,order_date=odate)
+        context={
+            'net_amt':net_amt,
+            'order_list':order_list,
+            'rid':rid,
+            }  
+
+    except:
+        context={
+        
         'order_list':order_list,
-        'rid':rid,
-    }    
+        
+        }     
     return render(request, 'store/checkout.html', context)     
 
 @login_required
 def pastView(request):
     customer3=request.user
-    tmp=PastOrders.objects.filter(customer2=customer3).order_by('order_date')
+    tmp=PastOrders.objects.filter(customer2=customer3).order_by('-order_date')
     
     context={
         'order_list':tmp,
@@ -135,3 +150,22 @@ def rate_restaurant(request):
                 
 
     return JsonResponse(response_data)
+
+
+@csrf_exempt
+@login_required
+def rate(request):
+    orders=FoodOrder.objects.all()
+    
+
+    for order in orders:
+        
+        rid=order.food.restaurant.pk
+        
+
+    
+    context={
+        
+        'rid':rid,
+    }    
+    return render(request, 'store/rate.html', context)     

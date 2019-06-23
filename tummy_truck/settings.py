@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
+    
 ]
 
 MIDDLEWARE = [
@@ -132,5 +133,5 @@ AUTHENTICATION_BACKENDS = (
 )
 
 SITE_ID = 1
-LOGIN_REDIRECT_URL="/profile/"
+LOGIN_REDIRECT_URL="/cities/"
 LOGOUT_REDIRECT_URL="/"

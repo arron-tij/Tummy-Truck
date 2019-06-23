@@ -2,7 +2,7 @@
 <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Chivo:300,700|Playfair+Display:700i" rel="stylesheet">
 
@@ -255,14 +255,13 @@
         </div>
 
         
-       
         <div class="collapse navbar-collapse" id="mainNavBar">
             <ul class="nav navbar-nav">
                 <li><a href="{%url 'index'%}"><span class="glyphicon glyphicon-home"></span>&nbspHome</a></li>
                   {% if user.is_authenticated %}
-                <li class="active" ><a href="{%url 'placeView'%}"><span class="glyphicon glyphicon-shopping-cart"></span>&nbspOrder Food</a></li>
+                <li ><a href="{%url 'placeView'%}"><span class="glyphicon glyphicon-shopping-cart"></span>&nbspOrder Food</a></li>
                 {%else%}
-                <li class="active"><a href="{%url 'placeView'%}"><span class="glyphicon glyphicon-glass"></span>&nbspBrowse Restaurants</a></li>
+                <li><a href="{%url 'placeView'%}"><span class="glyphicon glyphicon-glass"></span>&nbspBrowse Restaurants</a></li>
                 <li><a href="{% url 'account_login'%}"><span class="glyphicon glyphicon-log-in"></span>&nbspLogin</a></li>
                 
                 {%endif%}
@@ -270,9 +269,9 @@
             </ul>
             {% if user.is_authenticated %}
             <ul class="nav navbar-nav navbar-right">
-            	
             	<li><a href="{%url 'pastView'%}"><span class="glyphicon glyphicon-tasks"></span>&nbspPast Orders</a></li>
               <li><a href="{%url 'account_logout'%}"><span class="glyphicon glyphicon-log-out"></span>&nbspLogout</a></li>
+            	
             </ul>
             {%endif%}	
             		
@@ -288,31 +287,48 @@
 
 
 
-{% if not order_list %}
+
 <div class="jumbotron text-center" >   
 
-<h1>Go get some items first</h1>
-
-<hr>
-<a href="/restaurants/{{rid}}/"><button class="btn btn-danger" ><h3>Order Again</h3></button></a>
+<form >
+	 <h1> <input type="number" name="rating" id="rating" min="1" max="5">
+	 <input type="submit" id="rate-button"  onclick="rate({{rid}})"></h1>
+</form>
 </div>
-{% else %}
-<div class="jumbotron text-center" >   
-
-{% for order in order_list %}
-<h3>{{order}}, &nbsp</h3>
-{% endfor %}
-
-<br><h2>
-	<hr><b>
-Bill total:&nbsp&nbspRs.&nbsp
-{{net_amt}}</h2></b>
-<hr>
-<a href="/restaurants/{{rid}}/"><button class="btn btn-danger" ><h3>Order Again</h3></button></a>&nbsp&nbsp&nbsp&nbsp
-<a href="{% url 'rate'%}"><button class="btn btn-danger" ><h3>Rate Us</h3></button></a>
-</div>
-<br><br> 
-
-
-{% endif %}
 </body>
+
+
+
+
+
+
+<script>
+function rate(rid){
+    var rating = document.getElementById("rating").value;
+    
+   	if(rating<=5){
+    $.ajax({
+		url:"{% url 'rate_restaurant' %}",
+		method:"POST",
+		data:{
+			rid:  rid,
+			rating: rating,
+		},
+
+		success:function(data,status,xhr){
+			if(data['message']==1){
+                alert("Restaurant successfully rated");
+                window.location.href="/cities/";
+			}
+			else{
+				alert("Unable to rate this restaurant");
+			}
+		},
+		error:function(xhr,status,err){
+			alert("Some error occured");
+		}
+
+
+	})}else alert("Enter a number between 1 to 5");}		
+
+</script>

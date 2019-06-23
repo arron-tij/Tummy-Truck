@@ -1,13 +1,228 @@
-{% load socialaccount %}
 
-<h1>Welcome</h1>
-{% if user.is_authenticated %}
-<p>Welcome {{ user.username }} !!!</p>
-<p><a href="{% url 'account_logout' %}">Log out</a>
-<p><a href="{% url 'placeView' %}">Order food</a>
-<p><a href="{% url 'pastView' %}">Past Orders</a>	
-{% else %}
-<p><a href="{% url 'account_signup' %}">Sign Up</a></p>
-<p><a href="{% url 'account_login' %}">Log In </a></p>
-<p><a href="{% url 'placeView' %}">Browse Restaurants</a></p>
-{% endif %}
+
+
+{% load socialaccount %}
+{% load static %}
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script >
+          $(window).on('load', function() {  
+          $('#loading').fadeOut(); 
+          $('#Load').delay(100).fadeOut('slow');  
+          $('body').delay(100).css({'overflow':'visible'});
+        })
+    </script>
+
+
+ <style>
+         body {
+            background-image: url( '/static/images/blue.jpeg'  );
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover; 
+         }
+         
+         .navbar{
+            border-radius:0;
+         }
+         .navbar-brand {
+            font-family:'Satisfy',cursive;
+              
+        }
+        .jumbotron { 
+          background-image: url( '/static/images/wall.jpg' );
+          background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover; 
+          color: #FFDF00;
+          font-family:'Satisfy',cursive;
+          border-top: 3px solid #76ff7a;
+          border-bottom: 3px solid #76ff7a;
+        }
+        .image{
+            border:3px solid orange;
+            padding:6px;
+        }
+        hr{
+            border-bottom: 4px solid black;
+        }
+        blockquote{
+            background-image: url('/static/images/background.jpg');
+            font-family:'Satisfy';
+            font-size: 200%;
+            border:2px solid black;
+        }
+        a{
+            text-decoration:none;
+            color:white;
+            text-align: center;
+        }
+        .btn {
+              border: none;
+              color: white;
+              padding: 14px 28px;
+              font-size: 16px;
+              cursor: pointer;
+              text-align: center;
+            }
+
+        .warning {background-color: #ff9800;} /* Orange */
+        .warning:hover {background: #e68a00;}
+        .contacts{
+            background-color:#008000;
+            color: #FFDF00;
+            border:2px solid black;
+
+        }
+        .cus{
+            border:2px solid black;
+            padding:2px;
+            left:30%;
+        }
+        .load__animation{
+          border: 5px solid #272727;
+          border-top-color: #e50914;
+          border-top-style: groove;
+          height: 100px;
+          width: 100px;
+          border-radius: 100%;
+          position: relative;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          margin: auto;
+          -webkit-animation: turn 1.5s linear infinite;
+          -o-animation: turn 1.5s linear infinite;
+          animation: turn 1.5s linear infinite;
+        }
+
+        .load {
+          position: fixed;
+          background: url(http://i.imgur.com/JUlfODF.png) no-repeat 50% fixed / cover;);
+          width: 100%;
+          height: 100vh;
+          display: flex;
+          align-items:center;
+          justify-content: center;
+          z-index: 999;
+        }
+
+        .load__container {
+          position: relative;
+        }
+
+        @keyframes turn {
+          from {transform: rotate(0deg)}
+          to {transform: rotate(360deg)}
+        } 
+
+        .load__title {
+          color: #fff;
+          font-size: 2rem;
+        }
+
+
+        @keyframes loadPage {
+          0% {
+            opacity: 1;
+          }
+          50% {
+            opacity: .5;
+          }
+          100% {
+            opacity: 1;
+          }
+          
+        }
+      </style>  
+         
+</head>
+<body >
+ <div id="Load" class="load">
+      <div class="load__container">
+        <div class="load__animation"></div>
+        <div class="load__mask"></div>
+        <span class="load__title">Killing Hunger...</span>
+      </div>
+    </div>
+    <span>Loaded!<br><br><br><span/>
+<nav class="navbar navbar-fixed-top navbar-inverse">
+    <div class="container-fluid">
+
+        
+        <div class="navbar-header ">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNavBar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+         <a href="#" class="navbar-brand " >Tummy Truck</a>
+        </div>
+
+        
+        <div class="collapse navbar-collapse" id="mainNavBar">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="{%url 'index'%}"><span class="glyphicon glyphicon-home"></span>&nbspHome</a></li>
+                  {% if user.is_authenticated %}
+                <li ><a href="{%url 'placeView'%}"><span class="glyphicon glyphicon-shopping-cart"></span>&nbspOrder Food</a></li>
+                {%else%}
+                <li><a href="{%url 'placeView'%}"><span class="glyphicon glyphicon-glass"></span>&nbspBrowse Restaurants</a></li>
+                <li><a href="{% url 'account_login'%}"><span class="glyphicon glyphicon-log-in"></span>&nbspLogin</a></li>
+                
+                {%endif%}
+                
+            </ul>
+            {% if user.is_authenticated %}
+            <ul class="nav navbar-nav navbar-right">
+            	
+            	<li><a href="{%url 'pastView'%}"><span class="glyphicon glyphicon-tasks"></span>&nbspPast Orders</a></li>
+              <li><a href="{%url 'account_logout'%}"><span class="glyphicon glyphicon-log-out"></span>&nbspLogout</a></li>
+            </ul>
+            {%endif%}	
+            		
+        </div>
+
+    </div>
+</nav>
+
+
+<div class="container"><br><br></div>
+<div class="jumbotron text-center" >   
+    <img src='{% static "images/logo.jpg" %}' class="image">
+    <h1 >Tummy Truck</h1>
+ </div>   
+ <div class="container" >
+    <h1 style="font-family:'times new roman';font-size:400%;color: white;">Services</h1><hr>
+    
+ </div>
+
+ <blockquote class="container">
+     A fast and reliable food delivery system. Can be trusted to get you fresh food anywhere anytime.
+     
+ </blockquote>
+
+ <blockquote class="container">
+    Option to rate the restaurant after every order which ensures that the quality is maintained.
+ </blockquote> 
+ <blockquote class="container">
+   A well organised restaurant menu classified by cuisines and the recommended bestsellers.
+ </blockquote> 
+ <blockquote class="container">
+   Register for a username password to login or just login with facebook. Option to view all your past orders.
+ </blockquote>    
+
+<hr>
+<div class="container-fluid text-center contacts">
+    <h1 class="cus">Tech Support</h1><br>
+<div class='row'>
+    <div class="col-md-4 "><span class="glyphicon glyphicon-phone"></span><h3>Phone</h3><h4>+9191919191</h4></div>
+    <div class="col-md-4 "><span class="glyphicon glyphicon-envelope"></span><h3>Email</h3><h4>tummy_truck@ky.com</h4></div>
+    <div class="col-md-4 "><span class="glyphicon glyphicon-inbox"></span><h3>Fax</h3><h4>Who even uses fax?!</h4></div>
+</div></div>    
+</span></body>

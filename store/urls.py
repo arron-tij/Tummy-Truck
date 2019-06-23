@@ -10,7 +10,7 @@ urlpatterns = [
     path('restaurants/checkout/',checkout,name='checkout' ),
     path('cities/',placeView,name='placeView' ),
     path('past/',pastView,name='pastView' ),
-    path('restaurants/checkout/rate/',rate_restaurant,name='rate_restaurant' ),
-    
+    path('rate_rest/',rate_restaurant,name='rate_restaurant' ),
+    path('rate/',rate,name='rate' ),
         
 ]

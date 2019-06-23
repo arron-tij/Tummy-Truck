@@ -1,21 +1,110 @@
-{% extends "account/base.html" %}
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>.panel.panel-primary{
+  position: absolute;
+  top: 20%;
+  right: 30%;
+  left: 30%;
+  opacity:0.8;
+  
+}
 
+body {
+            background-image: url( '/static/images/red1.jpg'  );
+         }
+
+         .navbar{
+            border-radius:0;
+         }
+         .navbar-brand {
+            font-family:'Satisfy',cursive;
+              
+        }
+     </style>
 {% load i18n %}
 
-{% block head_title %}{% trans "Signup" %}{% endblock %}
+
 
 {% block content %}
-<h1>{% trans "Sign Up" %}</h1>
 
-<p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+<nav class="navbar navbar-fixed-top navbar-inverse">
+    <div class="container-fluid">
+
+        
+        <div class="navbar-header ">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNavBar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+         <a href="#" class="navbar-brand " >Tummy Truck</a>
+        </div>
+
+        
+        <div class="collapse navbar-collapse" id="mainNavBar">
+            <ul class="nav navbar-nav">
+                <li><a href="{%url 'index'%}"><span class="glyphicon glyphicon-home"></span>&nbspHome</a></li>
+                  {% if user.is_authenticated %}
+                <li ><a href="{%url 'placeView'%}"><span class="glyphicon glyphicon-shopping-cart"></span>&nbspOrder Food</a></li>
+                {%else%}
+                <li><a href="{%url 'placeView'%}"><span class="glyphicon glyphicon-glass"></span>&nbspBrowse Restaurants</a></li>
+                <li><a href="{% url 'account_login'%}"><span class="glyphicon glyphicon-log-in"></span>&nbspLogin</a></li>
+                
+                {%endif%}
+                
+            </ul>
+            {% if user.is_authenticated %}
+            <ul class="nav navbar-nav navbar-right">
+            	<li><a href="{%url 'pastView'%}"><span class="glyphicon glyphicon-tasks"></span>&nbspPast Orders</a></li>
+              <li><a href="{%url 'account_logout'%}"><span class="glyphicon glyphicon-log-out"></span>&nbspLogout</a></li>
+            	
+            </ul>
+            {%endif%}	
+            		
+        </div>
+
+    </div>
+</nav>
+
+
 
 <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
-  {% csrf_token %}
-  {{ form.as_p }}
+ 
+  <div class="container">
+  <div class="panel panel-primary">
+  <div class="panel-heading"><h3>Sign Up</h3></div>
+  <div class="panel-body">
+  <form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+      <p>
+        
+        <h4>{{ field.label_tag }}</h4>
+        
+                {%if forloop.counter == 1%}<h5><i class="fa fa-user"></i>&nbsp&nbsp{{ field }}</h5>{%endif%}
+                {%if forloop.counter == 2%}<h5><i class="fa fa-address-book"></i>&nbsp{{ field }}</h5>{%endif%}
+                {%if forloop.counter > 2%}<h5><i class="fa fa-key"></i>&nbsp{{ field }}</h5>{%endif%}
+                
+        {% if field.help_text %}
+          <small style="color: grey">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+      </p>
+    {% endfor %}
+   <div class="panel-footer">
   {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   {% endif %}
-  <button type="submit">{% trans "Sign Up" %} &raquo;</button>
+  <br>&nbsp&nbsp&nbsp	 
+  <button type="submit" class="primaryAction">{% trans "Sign Up" %} &raquo;</button>
+{% blocktrans %}&nbsp&nbspAlready have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}
 </form>
 
 {% endblock %}

@@ -1,58 +1,406 @@
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <style>input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-   opacity: 1;
-}</style>
-  <h1>Food</h1>
-  {% if user.is_authenticated %}
-<p>Welcome {{ user.username }} !!!</p>
-<p><a href="{% url 'account_logout' %}">Log out</a>
-{% else %}
-<p><a href="{% url 'account_login' %}">Log In</a></p>
-{% endif %}
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Chivo:300,700|Playfair+Display:700i" rel="stylesheet">
 
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <style>
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+       opacity: 1;}
+
+
+     .content2 {
+          position: fixed;
+          top: 10%;
+          left: 0;
+          background: rgba(0, 0, 0, 0.5);
+          color: #FFF700;
+          width: 100%;
+          padding: 2px;
+          border-bottom:4px solid #B2F302; 
+          border-top:4px solid #B2F302; 
+          
+          
+        }
+        .table{
+          font-weight: 600;
+        }
+        .header {
+          text-align: center;
+          color:white;
+          font-family: 'Satisfy',cursive;
+          
+        }
+        .header2 {
+          padding: 10px 16px;
+          background-image: url( '/static/images/blue.jpg' ); 
+          color: #f1f1f1;
+}
+         body {
+            background-image: url( '/static/images/black3.jpg' );
+             background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover; 
+            
+         }
+         h1 {
+         font-family: 'Playfair Display', serif;
+         font-weight: 700;
+         font-style: italic;
+        }
+        h2{
+                color:orange !important;
+                font-family: 'Satisfy';
+                font-weight: 500;
+                
+        }
+        h3{
+                font-family: 'Chivo', sans-serif;
+                font-weight: 1000;
+        }
+        
+                
+         .navbar{
+            border-radius:0;
+         }
+         .navbar-brand {
+            font-family:'Satisfy',cursive;
+              
+        }
+        .jumbotron { 
+          background-image: url( '/static/images/wood.jpg' ); 
+          color: #FFDF00;
+          font-family:'Satisfy',cursive;
+          border: 3px solid black;
+          background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover; 
+        }
+        .image{
+            border:3px solid black;
+            padding:6px;
+        }
+        hr{
+            border-bottom: 4px solid black;
+        }
+        blockquote{
+            background-image: url('/static/images/bq.jpg');
+            font-family:'Satisfy';
+            font-size: 200%;
+            border:2px solid black;
+        }
+        a{
+            text-decoration:none;
+            color:#66FF66;
+        
+        }
+        a:hover{
+            text-decoration:none;
+            color:yellow;
+
+        
+        }
+        .btn {
+              border: none;
+              color: white;
+              padding: 14px 28px;
+              font-size: 16px;
+              cursor: pointer;
+              text-align: center;
+            }
+
+        .warning {background-color: #ff9800;} /* Orange */
+        .warning:hover {background: #e68a00;}
+        .contacts{
+            background-color:#008000;
+            color: #FFDF00;
+            border:2px solid black;
+
+        }
+        .cus{
+            border:2px solid black;
+            padding:2px;
+            left:30%;
+        }
+        .load__animation{
+          border: 5px solid #272727;
+          border-top-color: #e50914;
+          border-top-style: groove;
+          height: 100px;
+          width: 100px;
+          border-radius: 100%;
+          position: relative;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          margin: auto;
+          -webkit-animation: turn 1.5s linear infinite;
+          -o-animation: turn 1.5s linear infinite;
+          animation: turn 1.5s linear infinite;
+        }
+
+        .load {
+          position: fixed;
+          background: url(http://i.imgur.com/JUlfODF.png) no-repeat 50% fixed / cover;);
+          width: 100%;
+          height: 100vh;
+          display: flex;
+          align-items:center;
+          justify-content: center;
+          z-index: 999;
+        }
+
+        .load__container {
+          position: relative;
+        }
+
+        @keyframes turn {
+          from {transform: rotate(0deg)}
+          to {transform: rotate(360deg)}
+        } 
+
+        .load__title {
+          color: #fff;
+          font-size: 2rem;
+        }
+
+
+        @keyframes loadPage {
+          0% {
+            opacity: 1;
+          }
+          50% {
+            opacity: .5;
+          }
+          100% {
+            opacity: 1;
+          }
+          
+        }
+        img {
+          border: 2px solid #66FF66;
+          border-radius: 8px; 
+          padding: 5px;
+          width: 31%;
+          height:250px;
+        }
+
+        img:hover {
+          box-shadow: 0px 0px 15px 15px rgba(0, 140, 186, 0.5);
+        }
+        
+        th{
+          color:cyan;  
+        }
+        td{
+            color: yellow;
+        }
+        #t1{
+             color: yellow;
+        }
+        hr{
+            color:orange;
+        }
+        .sticky {
+          position: fixed;
+          top: 45px;
+          width: 100%;
+        }
+
+        .sticky + .content {
+          padding-top: 102px;
+        }
+        .content {
+          padding: 16px;
+        }  
+        .btn{
+          background:black;
+          font-weight: 1000;
+          color:yellow;
+          border:1px solid yellow;
+        }    
+        input{
+          border:1px solid orange;
+          background: black;
+          color:#66FF66;
+          text-align: center;
+        } 
+        hr{
+          border:2px solid #66FF66;
+        }
+        .table td{
+    border: #66FF66 solid 1px !important;
+}
+.table th{
+    border: #66FF66 solid 1px !important;
+}
+#stars{
+  color:yellow !important;
+}
+
+</style>
+<body>
+  
+<nav class="navbar navbar-fixed-top navbar-inverse">
+    <div class="container-fluid">
+
+        
+        <div class="navbar-header ">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNavBar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+         <a href="#" class="navbar-brand " >Tummy Truck</a>
+        </div>
+
+        
+        
+        <div class="collapse navbar-collapse" id="mainNavBar">
+            <ul class="nav navbar-nav">
+                <li ><a href="{%url 'index'%}"><span class="glyphicon glyphicon-home"></span>&nbspHome</a></li>
+                  {% if user.is_authenticated %}
+                <li class="active"><a href="{%url 'placeView'%}"><span class="glyphicon glyphicon-shopping-cart"></span>&nbspOrder Food</a></li>
+                {%else%}
+                <li class="active"><a href="{%url 'placeView'%}"><span class="glyphicon glyphicon-glass"></span>&nbspBrowse Restaurants</a></li>
+                <li><a href="{% url 'account_login'%}"><span class="glyphicon glyphicon-log-in"></span>&nbspLogin</a></li>
+                
+                {%endif%}
+                
+            </ul>
+            {% if user.is_authenticated %}
+            <ul class="nav navbar-nav navbar-right">
+              
+              <li><a href="{%url 'pastView'%}"><span class="glyphicon glyphicon-tasks"></span>&nbspPast Orders</a></li>
+              <li><a href="{%url 'account_logout'%}"><span class="glyphicon glyphicon-log-out"></span>&nbspLogout</a></li>
+            </ul>
+            {%endif%} 
+                
+        </div>
+
+    </div>
+</nav>
+<br><br><br>
+<div class="jumbotron text-center" >   
+    
+    <h1 >{{rname}}</h1>
+    <hr>    
+    <h2>{{descrpn}}</h2>
+    <h2 id="stars">
+      {% with ''|center:rem as range %}
+    
+    {% for _ in range %}
+       <span class= 'glyphicon glyphicon-star-empty'></span>    
+       {% endfor %}
+
+    {% endwith %}
+    {% with ''|center:ratingint as range %}
+    
+    {% for _ in range %}
+       <span class= 'glyphicon glyphicon-star'></span>    
+       {% endfor %}
+
+    {% endwith %}
+      </h2> 
+    <h2>{{rating}}&nbsp/&nbsp5</h2>
+    <hr>
+   <div class="header2"  id="myHeader">{% if user.is_authenticated %}
+    <h3><a href="#checkout-button"><button class="btn btn-danger btn-lg">
+    Checkout</button></a></h3>{%endif%}
+    <h3>  
+    <a href="#menu"><button class="btn btn-success btn-xs">Bestsellers </button> </a>&nbsp&nbsp<a href="#menu"><button class="btn btn-success btn-xs">Menu </button>&nbsp</a>:  {% for fcat in fcat_list %}<a href="#{{fcat}}"><button class="btn btn-danger btn-xs">{{fcat}}</button>&nbsp|&nbsp </a>  {% endfor %}
+   </h3>
+ </div>
+ </div>
+  
+<br><br><br><br><br><br><br><br><br><br><br><br>
+<div class="content">
 <table class="table">
-    <thead>
+    <thead id="menu">
         <tr>
         <th scope="col">#</th>
         <th scope="col">Name</th>
         <th scope="col">MRP</th>
-        <th scope="col">Qty.</th>
+        {% if user.is_authenticated %}<th scope="col">Qty.</th>{%endif%}
         </tr>
     </thead>
+
+   
+
+
+
+      <tbody>
+        
+        <tr id="Bestsellers"><td ><h2><b>Bestsellers</b></h2></td></tr>
+        {% for food in restaurant_foods %}
+
+        {%if forloop.counter <= 5 %}
+        
+           
+        <tr>
+        <th scope="row"></th>
+        <td>{{food.name}}</td>
+        <td>{{food.mrp}}</td>{% if user.is_authenticated %}
+          {% if user.is_authenticated %}
+        <td >
+        </td>{%endif%}
+             
+        {% endif %}
+        {% endif %}
+        
+        </tr>
+        
+    {% endfor %}
+
+    </tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <tbody>
         {% for fcat in fcat_list %}
-        <tr><td>{{fcat}}</td></tr>
+        <tr><td id="{{fcat}}"><h2>{{fcat}}</h2></td></tr>
         {% for food in restaurant_foods %}
 
         {%if fcat == food.category %}
         
            
         <tr>
-        <th scope="row">{{forloop.counter}}</th>
+        <th scope="row"></th>
         <td>{{food.name}}</td>
         <td>{{food.mrp}}</td>{% if user.is_authenticated %}
-        <td ><input type="number" id="added{{food.id}}" name="added{{food.id}}" onchange="add({{food.id}})">
-        </td>
+          {% if user.is_authenticated %}
+        <td ><input type="number" min='0' id="added{{food.id}}" name="added{{food.id}}" onchange="add({{food.id}})">
+        </td>{%endif%}
              
         {% endif %}
         {% endif %}
         
         </tr>
         {% endfor %}
-    {% endfor %}
-
-    <a href="{% url 'checkout' %}"><button class="btn btn-primary" id="checkout-button">Checkout</button></a>
-    
-    
+    {% endfor %} 
     </tbody>
 </table>
-
+</div>
+<hr>
+<center>
+<a href="{% url 'checkout' %}" ><button class="btn btn-primary" id="checkout-button">Checkout</button></a></center>
+</body>
 
 <script>
 function add(food_id){
@@ -72,6 +420,22 @@ function add(food_id){
         
 
     })
+}
+</script>
+<script>
+
+
+window.onscroll = function() {myFunction()};
+
+var header = document.getElementById("myHeader");
+var sticky = header.offsetTop;
+
+function myFunction() {
+  if (window.pageYOffset > sticky) {
+    header.classList.add("sticky");
+  } else {
+    header.classList.remove("sticky");
+  }
 }
 </script>
 
